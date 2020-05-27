@@ -167,6 +167,12 @@ variables or in the gunicorn configuration file.
     - **Type:** `boolean`
     - **Default:** `false`
 
+- **`ARCHIVEMATICA_DASHBOARD_DASHBOARD_CAS_AUTHENTICATION`**:
+    - **Description:** enables the CAS authentication system.
+    - **Config file example:** `Dashboard.cas_authentication`
+    - **Type:** `boolean`
+    - **Default:** `false`
+
 - **`ARCHIVEMATICA_DASHBOARD_DASHBOARD_LDAP_AUTHENTICATION`**:
     - **Description:** enables the LDAP authentication system.
     - **Config file example:** `Dashboard.ldap_authentication`
