@@ -77,6 +77,7 @@ $(document).ready(function()
                 data: JSON.stringify(data),
                 dataType: 'json',
                 type: 'POST',
+                headers: {'X-CSRFToken': getCookie('csrftoken')},
                 success: function() {}
             });
         },
