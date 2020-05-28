@@ -29,9 +29,7 @@ from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext as _
 import requests
 
-from amclient import AMClient
-
-from archivematicaFunctions import get_setting
+from archivematicaFunctions import setup_amclient, AMCLIENT_ERROR_CODES
 import elasticSearchFunctions as es
 import storageService as storage_service
 
@@ -78,13 +76,11 @@ def check_and_update_transfer_pending_deletion(uuid, pending_deletion):
     :param pending_deletion: Current pending_deletion value in transfers ES index.
     :return: None
     """
-    api_results = AMClient(
-        ss_api_key=get_setting("storage_service_apikey", ""),
-        ss_user_name=get_setting("storage_service_user", ""),
-        ss_url=get_setting("storage_service_url", "").rstrip("/"),
-        package_uuid=uuid,
-    ).get_package_details()
-    if api_results in (1, 2, 3):
+    amclient = setup_amclient()
+    amclient.package_uuid = uuid
+    api_results = amclient.get_package_details()
+
+    if api_results in AMCLIENT_ERROR_CODES:
         logger.warning(
             "Package {} not found in Storage Service. AMClient error code: {}".format(
                 uuid, api_results
